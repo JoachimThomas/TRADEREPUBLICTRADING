@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# LAST_CHANGE: 2026-03-06 11:06 (Europe/Berlin)
 
 # ------------------------------------------------------------
 # Exitcodes (für Pipeline-Steuerung)
@@ -341,6 +342,7 @@ def parse_one(text: str, source_pdf: str) -> dict:
     tax_total = abs(float(tax_total or 0.0))
 
     raw_amount = max(0.0, booking_amount - fee_total)
+    unit_price_raw = (raw_amount / qty) if qty > 0 else 0.0
 
     basekey = exec_id or (
         (order_id or "")
@@ -371,6 +373,7 @@ def parse_one(text: str, source_pdf: str) -> dict:
         "qty": qty,
         "booking_amount": booking_amount,
         "raw_amount": raw_amount,
+        "unit_price_raw": unit_price_raw,
         "fee_fremdkosten": ft["fee_fremdkosten"],
         "fee_sonst": ft["fee_sonst"],
         "fee_total": fee_total,

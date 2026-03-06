@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# LAST_CHANGE: 2026-03-06 11:06 (Europe/Berlin)
 
 import json
 import re
@@ -48,6 +49,13 @@ def month_from_ddmmyyyy(s: str) -> str:
     if not dt:
         return "1900-01"
     return f"{dt.year:04d}-{dt.month:02d}"
+
+
+def fmt_date_time_short(d: str, t: str) -> str:
+    dt = parse_ddmmyyyy(d)
+    ds = dt.strftime("%d.%m.%y") if dt else ""
+    ts = (t or "").strip()
+    return f"{ds} {ts}".strip()
 
 
 def fmt_de(n: float) -> str:
@@ -239,6 +247,7 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                 {
                     "buy_uid": r.get("uid", ""),
                     "buy_date": r.get("trade_date", ""),
+                    "buy_time": r.get("trade_time", ""),
                     "buy_source_pdf": (r.get("source_pdf", "") or "").strip(),
                     "qty_rem": qty,
                     "buy_cash_rem": float(r.get("booking_amount", 0.0) or 0.0),
@@ -293,9 +302,11 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                     {
                         "month": month_from_ddmmyyyy(r.get("trade_date", "")),
                         "sell_date": r.get("trade_date", ""),
+                        "sell_time": r.get("trade_time", ""),
                         "isin": isin,
                         "qty": take,
                         "buy_date": lot.get("buy_date", ""),
+                        "buy_time": lot.get("buy_time", ""),
                         "buy_uid": lot.get("buy_uid", ""),
                         "sell_uid": r.get("uid", ""),
                         "buy_source_pdf": buy_source_pdf,
@@ -334,8 +345,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
             "Monat",
             "ISIN",
             "Qty",
-            "Kauf_Datum",
-            "Verkauf_Datum",
+            "Kauf",
+            "Verkauf",
             "Kauf_UID",
             "Verkauf_UID",
             "Invest",
@@ -370,8 +381,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                     f["month"],
                     f["isin"],
                     f"{f['qty']:.6f}".replace(".", ","),
-                    f["buy_date"],
-                    f["sell_date"],
+                    fmt_date_time_short(f["buy_date"], f.get("buy_time", "")),
+                    fmt_date_time_short(f["sell_date"], f.get("sell_time", "")),
                     f["buy_uid"],
                     f["sell_uid"],
                     fmt_de(f["invest"]),
@@ -414,8 +425,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                 "Monat",
                 "ISIN",
                 "Qty",
-                "Kauf_Datum",
-                "Verkauf_Datum",
+                "Kauf",
+                "Verkauf",
                 "Kauf_UID",
                 "Verkauf_UID",
                 "Invest",
@@ -450,8 +461,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                         ff["month"],
                         ff["isin"],
                         f"{ff['qty']:.6f}".replace(".", ","),
-                        ff["buy_date"],
-                        ff["sell_date"],
+                        fmt_date_time_short(ff["buy_date"], ff.get("buy_time", "")),
+                        fmt_date_time_short(ff["sell_date"], ff.get("sell_time", "")),
                         ff["buy_uid"],
                         ff["sell_uid"],
                         fmt_de(ff["invest"]),
@@ -521,8 +532,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                 "Monat",
                 "ISIN",
                 "Qty",
-                "Kauf_Datum",
-                "Verkauf_Datum",
+                "Kauf",
+                "Verkauf",
                 "Kauf_UID",
                 "Verkauf_UID",
                 "Invest",
@@ -557,8 +568,8 @@ def rebuild_reports(ledger_rows: list, year: int, daily_date=None, daily_only: b
                         ff["month"],
                         ff["isin"],
                         f"{ff['qty']:.6f}".replace(".", ","),
-                        ff["buy_date"],
-                        ff["sell_date"],
+                        fmt_date_time_short(ff["buy_date"], ff.get("buy_time", "")),
+                        fmt_date_time_short(ff["sell_date"], ff.get("sell_time", "")),
                         ff["buy_uid"],
                         ff["sell_uid"],
                         fmt_de(ff["invest"]),
