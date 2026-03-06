@@ -39,7 +39,7 @@ def note(msg: str):
 # Pfade
 # ------------------------------------------------------------
 IN_DIR = Path(
-    "/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/Trading_Abrechnungen"
+    "/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/INBOX_TRADES"
 )
 
 ARCH_PDF = Path(

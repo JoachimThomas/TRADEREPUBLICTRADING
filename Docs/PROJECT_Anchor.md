@@ -1,4 +1,4 @@
-LAST_CHANGE: 2026-03-06 11:31 (Europe/Berlin)
+LAST_CHANGE: 2026-03-06 11:43 (Europe/Berlin)
 
 # InitialProjectDescription / ProjectAnchor
 
@@ -105,7 +105,7 @@ Aufgabe:
 
 ### IN
 
-- `/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/Trading_Abrechnungen`
+- `/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/INBOX_TRADES`
 
 ### ARCHIV
 
@@ -140,6 +140,10 @@ Aufgabe:
 - `~/Library/Application Support/Finanzen/.run/tr_trading_last`
 - Notification-Hook:
   `/Users/joachimthomas/Finanzverwaltung/Programme/Global/finance_notify.sh`
+- LaunchAgent:
+  `~/Library/LaunchAgents/de.joachim.finanz.tr.trading.pipeline.plist`
+- WatchPath des LaunchAgents:
+  `/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/INBOX_TRADES`
 
 ## Outputs
 
@@ -226,6 +230,9 @@ Der operative Zweck dieses Repos ist nicht allgemeines "Trading", sondern eine l
 
 - `tr_trading_state_from_pdfs.py` ergänzt den State pro Trade um `unit_price_raw`
 - `tr_trading_reports_from_state.py` schreibt Kauf- und Verkaufszeit in die Jahres-, Monats- und Tagesübersichten
+- Inbox des Trading-Importers wurde auf `/Users/joachimthomas/Documents/Joachim privat/Banken/Trade Republic/INBOX_TRADES` umgestellt
+- LaunchAgent `de.joachim.finanz.tr.trading.pipeline.plist` wurde auf denselben WatchPath umgestellt und neu geladen
+- aktuelle LaunchAgent-Plist wurde zusätzlich unter `Docs/` im Repo gesichert
 - bestehender produktiver State unter `~/Library/Application Support/Finanzen/TR_Trading/tr_trading_state.json` wurde einmalig nachgezogen
 - Vor der State-Migration wurde ein Backup angelegt:
   `~/Library/Application Support/Finanzen/TR_Trading/tr_trading_state.backup_20260306_112921.json`
